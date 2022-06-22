@@ -173,7 +173,7 @@ def change_password(username):
             data = []
             for i in handler:
                 if i['username'].lower() == username:
-                    i['phone_number'] = password
+                    i['password'] = password
                 data.append(i)
         with open('new_file.csv', 'w') as save_data:
             handler = csv.DictWriter(save_data, fieldnames=headers)
