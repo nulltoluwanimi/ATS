@@ -1,4 +1,5 @@
 import csv
+import sys
 
 headers = ['first_name', 'last_name', 'username', 'password', 'dob', 'phone_number', 'gender', 'address']
 
@@ -121,7 +122,7 @@ def edit_profile(username):
         address = user['address']
     dob = str(input('Enter D.O.B: '))
     if not dob:
-        dob =user['dob']
+        dob = user['dob']
     gender = compulsory_input('gender')
 
     if gender and phone_number:
@@ -149,7 +150,43 @@ def edit_profile(username):
         return
 
 
-# def change_password():
+def change_password(username):
+    user = {}
+    with open('new_file.csv', 'r') as file:
+        handler = csv.DictReader(file)
+        for key in handler:
+            if key['username'] == username.lower():
+                user = key
+                break
+    print(f'User info\n {user}')
+    old_password = compulsory_input('old_password')
+    password = compulsory_input('phone-number')
+
+    if old_password == user['password']:
+        print('Old password does not match')
+        sys.exit()
+
+    if password:
+        with open('new_file.csv', 'r') as update_file:
+            handler = csv.DictReader(update_file)
+            # w_handler = csv.DictWriter(update_file, fieldnames=headers)
+            data = []
+            for i in handler:
+                if i['username'].lower() == username:
+                    i['password'] = password
+                data.append(i)
+        with open('new_file.csv', 'w') as save_data:
+            handler = csv.DictWriter(save_data, fieldnames=headers)
+            handler.writeheader()
+            for i in data:
+                handler.writerow(i)
+    print('profile updated is successful')
+    input_ = input('would you like take another action (y/n): ').lower()
+    if 'y' == input_:
+        return prompt(username)
+    else:
+        return
+
 
 def logout(username):
     print(f'you have successfully logged out {username}')
@@ -168,7 +205,7 @@ def prompt(username):
     else:
         list_ = {
             '1': edit_profile,
-            '2': '',
+            '2': change_password,
             '3': logout
         }
         return list_[action](username)
