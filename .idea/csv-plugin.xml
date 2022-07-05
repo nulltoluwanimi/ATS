@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\CSV\occupation-2018-census-csv.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\WEEK3\hours-worked-per-week-in-other-jobs-2018-census-csv.csv">
           <value>
             <Attribute>
@@ -18,6 +25,27 @@
           </value>
         </entry>
         <entry key="\WEEK3\new_file.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\WEEK4\Account\transaction.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\WEEK4\Account\user.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\WEEK4\Account\wallet.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
