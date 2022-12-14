@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  {% for post in post_list%}
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <h5>{{post.title}}</h5>
+            <!--                 <h5>{{post.excerpt}}</h5>-->
+            <!--                 <h5>{{post.created_at}}</h5>-->
+            <!--                 <h5>{{post.author}}</h5>-->
+            <!--                 <h5>{{post.tags}}</h5>-->
+            <p>
+                {{ post.excerpt}}
+            </p>
+                  <button class="btn btn-primary text-white" type="button"><a href="{% url 'post' post.slug %}">Read</a>
+</button>
+        </div>
+        </div>
+        {% endfor %}
+
+</body>
+</html>

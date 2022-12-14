@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}<title>Local Library</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <!--    <link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
+</head>
+<body class="p-5 text-center bg-light container-fluid vh-100 mx-auto">
+<section>
+    <!-- Post -->
+    {% if post_list %}
+    {% for post in post_list%}
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <h5>{{post.title}}</h5>
+            <!--                 <h5>{{post.excerpt}}</h5>-->
+            <!--                 <h5>{{post.created_at}}</h5>-->
+            <!--                 <h5>{{post.author}}</h5>-->
+            <!--                 <h5>{{post.tags}}</h5>-->
+            <p>
+                {{ post.excerpt}}
+            </p>
+                  <button class="btn btn-primary text-white" type="button"><a href="{% url 'post' post.slug %}">Read</a>
+
+
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <h5>No post yet </h5>
+            {% if user.is_authenticated %}
+            <button class="btn btn-primary" type="button"><a href="{% url 'edit-blog' post.slug %}">edit post</a></button>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+<div class="col-md-8 mb-4">
+    <h5>want to add post </h5>
+    <button class="btn btn-primary" type="button"><a href="{% url 'add-post'%}">add post</a></button>
+</div>
+</body>
+</html>

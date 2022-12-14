@@ -7,6 +7,11 @@ class auth:
         self.headers = ['first_name', 'last_name', 'username', 'password', 'dob', 'phone_number', 'gender', 'address']
 
     @staticmethod
+    def __call__(self, *args, **kwargs):
+        return self
+
+    def __getitem__(self, item):
+        return self.headers[item]
     def validate_input(value):
         if value:
             return value
