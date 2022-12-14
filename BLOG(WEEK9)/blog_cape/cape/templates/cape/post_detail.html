@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}<title>Local Library</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <!--    <link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
+</head>
+<body class="p-5 text-center bg-light container-fluid vh-100 mx-auto">
+<section>
+    <!-- Post -->
+
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <h5>{{current_user}}</h5>
+            <h5>{{post.title}}</h5>
+            <img src="{% if post.image %} {{post.image.url}} {%else%} {{optional_image}} {% endif %}"/>
+            <h5>{{post.excerpt}}</h5>
+
+            <h5>{{post.created_at}}</h5>
+            <h5>{{post.author}}</h5>
+            <!--            <ima src="{{post.}}"/>-->
+            <h5>{{post.tags}}</h5>
+            <p>
+                {{ post.content}}
+            </p>
+            {% if current_user == blog_owner %}
+            <button class="btn btn-warning" type="button"><a href="{% url 'edit-blog' post.slug %}">edit-blog</a>
+            </button>
+            {% endif %}
+            <button class="btn btn-warning" type="button"><a href="{% url 'all-post' %}">back</a></button>
+            {% for comment in comments %}
+            <h4>{{comment.user_name}}</h4>
+            <h4>{{comment.text}} </h4>
+            {% if current_user == blog_owner %}
+            <form action="{% url 'archive-comment' comment.id %}" method="post">
+                <!--                <div class="form-control {% if form_field.errors %} invalid{%endif%}">-->
+                {%csrf_token%}
+                <button class="btn btn-warning"><a>archive</a>
+                </button>
+                <!--                    </div>-->
+            </form>
+            {% endif %}
+
+            {% endfor%}
+            {% if current_user == blog_owner %}
+            {% for comment in archive_comments %}
+            <h4>Archived Comments</h4>
+            <h4>{{comment.user_name}}</h4>
+            <h4>{{comment.text}} </h4>
+            <form action="{% url 'archive-comment' comment.id %}" method="post">
+                <!--                <div class="form-control {% if form_field.errors %} invalid{%endif%}">-->
+                {%csrf_token%}
+
+                <button class="btn btn-warning"><a>un-archive</a>
+                </button>
+                <!--                    </div>-->
+            </form>
+
+            {% endfor%}
+            {% endif %}
+        </div>
+        <div>
+            <form method="post" id="comment-form" onsubmit="formSubmit('{{ post.slug }}')">
+                {%csrf_token%}
+                {{comments_form}}
+                <button type="submit">add comment</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+<script>
+    const formSubmit = (post_slug)=>{
+
+        const form = new FormData();
+        const value = document.getElementById('id_text').value
+        form.append('comment', value)
+        console.log(form)
+
+
+        const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const url = "{%  url 'submit-with-fetch' post.slug %}"
+    fetch(url, {
+      method: 'POST',
+      body: form,
+      header:{
+        'Content-Type':'application/json',
+        'X-CSRFToken':csrf_token
+      }
+    }).then(response => console.log(response))
+    .catch(error => console.log(error))
+    }
+
+</script>
+</html>

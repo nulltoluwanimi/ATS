@@ -63,7 +63,7 @@ class Wallet:
     def fund_wallet(amount, **kwargs):
         try:
             with open('wallet.csv', 'r') as update_file:
-                handler = csv.DictReader(update_file)
+                handler= csv.DictReader(update_file)
                 data = []
                 for i in handler:
                     if i['_userid'] == kwargs['_userid']:

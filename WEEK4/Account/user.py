@@ -5,10 +5,14 @@ import bcrypt
 from decimal import Decimal
 from wallet import Wallet
 from transaction import Transaction
+from typing import AnyStr
 
 
 class User(Wallet, Transaction):
-    def __init__(self, first_name, last_name, balance=Decimal('0.00'), count=0, user=uuid.uuid4()) -> None:
+    TYPES = ('basic', '')
+
+    def __init__(self, first_name, last_name, balance=Decimal('0.00'), count=0,
+                 user="5aa95009-a971-4ebf-88a7-a6a8a2d10da8") -> None:
         # super().__init__(balance, count)
         self._id = user
         self.__first_name = first_name
@@ -23,6 +27,7 @@ class User(Wallet, Transaction):
 
     @id.setter
     def set_id(self, value):
+        print('setting id', value)
         all_user = self.get_all_users()
         for user in all_user:
             if user['_id'] == value:
@@ -46,8 +51,11 @@ class User(Wallet, Transaction):
     def set_last_name(self, value):
         return self.__last_name
 
+    def __repr__(self):
+        return f'<User {self.first_name!r} {self.last_name!r}>'
+
     @staticmethod
-    def save_user(**kwargs):
+    def save_user(**kwargs) -> AnyStr:
         print("saving user...")
         try:
             if not os.path.exists("user.csv"):

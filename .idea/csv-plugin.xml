@@ -59,6 +59,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\WEEK6\users.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
